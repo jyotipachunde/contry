@@ -10,11 +10,10 @@ function snackbar(title, text, icon) {
     });
 }
 let base = 'https://restcountries.com/v3.1/all';
-let countriesurl = `${base}/?fields=name,cca2,flags,region`;
+let countriesurl = `${base}/?fields=name,cca2,cca3,flags,region`;
 
 const make = async (apiURL, method, body) => {
-
-    // spinner.classList.remove("d-none");
+ // spinner.classList.remove("d-none");
 
     body = body ? JSON.stringify(body) : null;
 
@@ -41,7 +40,20 @@ const make = async (apiURL, method, body) => {
             throw new Error(err);
         }
 
-        return data;
+
+        let Cdata = data;
+
+        let codeObj = Cdata.reduce((acc, v) => {
+
+            acc[v.cca3] = v.name.common;
+
+            return acc;
+        }, {});
+        localStorage.setItem("Data", JSON.stringify(codeObj));
+        console.log("codeObj:", codeObj);
+         return data;
+
+
     }
     finally {
 
@@ -49,6 +61,9 @@ const make = async (apiURL, method, body) => {
 
     }
 }
+
+
+
 
 
 async function fetchcountries() {
@@ -89,6 +104,7 @@ async function fetchcountries() {
 
 }
 fetchcountries();
+//localStorage.setItem("Data", JSON.stringify(codeObj));
 
 
 

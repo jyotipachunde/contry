@@ -1,5 +1,8 @@
  const singlec=document.getElementById("single-country");
 
+ const ss= JSON.parse(localStorage.getItem("Data") || "{}")
+ console.log("ss:",ss);
+
 
 const param=new URLSearchParams(window.location.search);
 console.log("URL params:",param);
@@ -57,18 +60,25 @@ async function fetchcountry() {
                 <li class="list-group-item">
                     <strong>Borders:</strong>
                      ${
-                        c.borders ? c.borders.map(code => `<a href="country.html?code=${code}"> ${code} 
-                            
-                            </a>`).join(","): "No Borders"
+                        c.borders ? c.borders.map(code => `<a href="country.html?code=${code}">   ${ss[code]}  </a>`).join(","): 
+                        "No Borders"
                     }
                 </li>
 
             </ul>
         </div>`;
+        let p=new URLSearchParams(window.location.href=`country.html?code=${code=document.querySelectorAll('h5.card-title')[0].innertext}`)
+console.log("params:",p);
   
     } catch (err) {
         console.log("Error:", err.message);
     }
 }
 fetchcountry();
+
+ //codeMap = JSON.parse(localStorage.getItem("Data") || "{}");
+
+    //console.log(codeMap);
+    
+   // `${codeMap[c]}`
 
